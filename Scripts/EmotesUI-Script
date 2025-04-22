@@ -39,9 +39,7 @@ _IntBPadding_F1 = 2
 _IntBPadding_F2 = 2
 
 -- Data [A-1] --
-_G.PremadeEmotes = {
-    ["Sonic Teleportation"] = {15957361339}
-}
+_G.PremadeEmotes = {}
 _G.UIConfigs = {}
 _Data = {
     _fPos1 = _fPos1,
@@ -317,6 +315,8 @@ GameLoaded(function()
         warn("[Noticed]: hh data exist.")
     end
     
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/HoangHien2k3/Tensura/refs/heads/main/DataStorage/EmotesUI/EmotesData"))()
+    task.wait()
     _CPlus_BTN(_G.PremadeEmotes, _ExScroll, 9999, _IntCanvasmain_F1, _IntBHeight_F1, _IntBPadding_F1)
     
     _MouseButton1Click(_ToggleBtn, function()
