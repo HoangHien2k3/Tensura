@@ -1,3 +1,9 @@
 _G.PremadeEmotes = {
-    ["Sonic Teleportation"] = {15957361339}
+    ["Sonic Idle"] = {15957361339},
+    ["Carameldansen"] = {17861841334},
+    ["Celebration"] = {17863041811},
+    ["Breakdance"] = {15090032390},
+    ["Nika"] = {17097409396},
+    ["Gojo on Heaven"] = {15503060948},
+    ["Fake Counter Death Blow"] = {15128849047}
 }
