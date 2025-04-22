@@ -1,0 +1,364 @@
+-- Emote GUI.v2: HoangHien Scripts --
+local _CoreGui, _HttpService  -- Service [A]
+local _ScreenGui, _ToggleBtn, _MyCollection, _YourCollection  -- Instance UI [B]
+local _Data, _OverwriteData, _DecodeData, _fPos1, _fPos2, _fPos3, _fPos4, Its_ToggledUI, PremadeFrameVis, SelfFrameVis, _IntfPos, _IntCanvasmain_F1, _IntBHeight_F1, _IntBPadding_F1, _IntCanvasmain_F2, _IntBHeight_F2, _IntBPadding_F2 -- Variable [C]
+local _RandomStuff_X1, _RandomStuff_X2 -- random Variable [D]
+
+_CoreGui = game:GetService("CoreGui")
+_HttpService = game:GetService("HttpService")
+
+for index, ui in pairs(_CoreGui:GetChildren()) do
+    if ui:IsA("ScreenGui") and ui.Name == "EmoteUI_Version2" then
+        ui:Destroy()
+    end
+end
+task.wait(0.2)
+
+_ScreenGui = Instance.new("ScreenGui", _CoreGui)
+_ToggleBtn = Instance.new("TextButton", _ScreenGui)
+_ExFrame = Instance.new("Frame", _ScreenGui)
+_ExScroll = Instance.new("ScrollingFrame", _ExFrame)
+_ExScroll_I = Instance.new("ScrollingFrame", _ExFrame)
+_MyCollection = Instance.new("TextButton", _ExFrame)
+_YourCollection = Instance.new("TextButton", _ExFrame)
+
+-- Variable [A-0] --
+_fPos1 = 0.4
+_fPos2 = 0
+_fPos3 = 0.25
+_fPos4 = 0
+Its_ToggledUI = false
+PremadeFrameVis = false
+SelfFrameVis = false
+
+_IntCanvasmain_F1 = 0
+_IntCanvasmain_F2 = 0
+_IntBHeight_F1 = 10
+_IntBHeight_F2 = 10
+_IntBPadding_F1 = 2
+_IntBPadding_F2 = 2
+
+-- Data [A-1] --
+_G.PremadeEmotes = {
+    ["Sonic Teleportation"] = {15957361339}
+}
+_G.UIConfigs = {}
+_Data = {
+    _fPos1 = _fPos1,
+    _fPos2 = _fPos2,
+    _fPos3 = _fPos3,
+    _fPos4 = _fPos4,
+    Its_ToggledUI = Its_ToggledUI,
+    PremadeFrameVis = PremadeFrameVis,
+    SelfFrameVis = SelfFrameVis
+}
+
+local DataConfigs = _G.UIConfigs
+-- (DataConfigs[""] or {})[] or 
+
+-- Button Configs [A-2] --
+_ScreenGui.Name = "EmoteUI_Version2"
+
+_ToggleBtn.BackgroundTransparency = (DataConfigs["Toggle"] or {})[1] or 0.5
+_ToggleBtn.BackgroundColor3 = (DataConfigs["Toggle"] or {})[2] or Color3.fromRGB(0, 0, 0)
+_ToggleBtn.Position = (DataConfigs["Toggle"] or {})[3] or UDim2.new(0.945, 0, -0.15, 0)
+_ToggleBtn.Size = (DataConfigs["Toggle"] or {})[4] or UDim2.new(0.05, 0, 0.1, 0)
+_ToggleBtn.TextColor3 = (DataConfigs["Toggle"] or {})[5] or Color3.fromRGB(255, 255, 255)
+_ToggleBtn.TextScaled = (DataConfigs["Toggle"] or {})[6] or true
+_ToggleBtn.TextSize = (DataConfigs["Toggle"] or {})[7] or 9
+_ToggleBtn.Font = (DataConfigs["Toggle"] or {})[8] or Enum.Font.Code
+_ToggleBtn.Text = (DataConfigs["Toggle"] or {})[9] or "+"
+_ToggleBtn.Visible = true
+
+_ExFrame.BackgroundTransparency = (DataConfigs["Frame"] or {})[1] or 0.5
+_ExFrame.BackgroundColor3 = (DataConfigs["Frame"] or {})[2] or Color3.fromRGB(0, 0, 0)
+_ExFrame.Position = (DataConfigs["Frame"] or {})[3] or UDim2.new(0.4, 0, 0.25, 0)
+_ExFrame.Size = (DataConfigs["Frame"] or {})[4] or UDim2.new(0.2, 0, 0.25, 0)
+_ExFrame.Active = true
+_ExFrame.Draggable = (DataConfigs["Frame"] or {})[5] or true
+_ExFrame.Visible = false
+
+_ExScroll.BackgroundTransparency = (DataConfigs["ScrollingFrame"] or {})[1] or 0.5
+_ExScroll.BackgroundColor3 = (DataConfigs["ScrollingFrame"] or {})[2] or Color3.fromRGB(0, 0, 0)
+_ExScroll.Position = (DataConfigs["ScrollingFrame"] or {})[3] or UDim2.new(0.02, 0, 0.15, 0)
+_ExScroll.Size = (DataConfigs["ScrollingFrame"] or {})[4] or UDim2.new(0.650, 0, 0.82, 0)
+_ExScroll.CanvasSize = (DataConfigs["ScrollingFrame"] or {})[5] or UDim2.new(0, 0, 0, 0)
+_ExScroll.ScrollBarThickness = (DataConfigs["ScrollingFrame"] or {})[6] or 0.1
+_ExScroll.Visible = false
+
+_ExScroll_I.BackgroundTransparency = (DataConfigs["ScrollingFrame"] or {})[1] or 0.5
+_ExScroll_I.BackgroundColor3 = (DataConfigs["ScrollingFrame"] or {})[2] or Color3.fromRGB(0, 0, 0)
+_ExScroll_I.Position = (DataConfigs["ScrollingFrame"] or {})[3] or UDim2.new(0.02, 0, 0.15, 0)
+_ExScroll_I.Size = (DataConfigs["ScrollingFrame"] or {})[4] or UDim2.new(0.650, 0, 0.82, 0)
+_ExScroll_I.CanvasSize = (DataConfigs["ScrollingFrame"] or {})[5] or UDim2.new(0, 0, 0, 0)
+_ExScroll_I.ScrollBarThickness = (DataConfigs["ScrollingFrame"] or {})[6] or 0.1
+_ExScroll_I.Visible = false
+
+_MyCollection.BackgroundTransparency = (DataConfigs["MyCollection"] or {})[1] or 0.5
+_MyCollection.BackgroundColor3 = (DataConfigs["MyCollection"] or {})[2] or Color3.fromRGB(0, 0, 0)
+_MyCollection.Position = (DataConfigs["MyCollection"] or {})[3] or UDim2.new(0.02, 0, 0.04, 0)
+_MyCollection.Size = (DataConfigs["MyCollection"] or {})[4] or UDim2.new(0.25, 0, 0.10, 0)
+_MyCollection.TextColor3 = (DataConfigs["MyCollection"] or {})[5] or Color3.fromRGB(255, 255, 255)
+_MyCollection.TextScaled = (DataConfigs["MyCollection"] or {})[6] or true
+_MyCollection.TextSize = (DataConfigs["MyCollection"] or {})[7] or 9
+_MyCollection.Font = (DataConfigs["MyCollection"] or {})[8] or Enum.Font.Code
+_MyCollection.Text = (DataConfigs["MyCollection"] or {})[9] or "Default"
+_MyCollection.Visible = true
+
+_YourCollection.BackgroundTransparency = (DataConfigs["YourCollection"] or {})[1] or 0.5
+_YourCollection.BackgroundColor3 = (DataConfigs["YourCollection"] or {})[2] or Color3.fromRGB(0, 0, 0)
+_YourCollection.Position = (DataConfigs["YourCollection"] or {})[3] or UDim2.new(0.28, 0, 0.04, 0)
+_YourCollection.Size = (DataConfigs["YourCollection"] or {})[4] or UDim2.new(0.25, 0, 0.10, 0)
+_YourCollection.TextColor3 = (DataConfigs["YourCollection"] or {})[5] or Color3.fromRGB(255, 255, 255)
+_YourCollection.TextScaled = (DataConfigs["YourCollection"] or {})[6] or true
+_YourCollection.TextSize = (DataConfigs["YourCollection"] or {})[7] or 9
+_YourCollection.Font = (DataConfigs["YourCollection"] or {})[8] or Enum.Font.Code
+_YourCollection.Text = (DataConfigs["YourCollection"] or {})[9] or "Storage"
+_YourCollection.Visible = true
+
+-- function [B-1] --
+function PcallCheckResult(_Scripts, _Scripts_I)
+    local success, result = pcall(function()
+        _Scripts()
+    end)
+    if success then
+        _Scripts_I()
+    else
+        warn("[Bugs]: scripts error, result: " .. result .. ".")
+    end
+end
+
+function GameLoaded(_Scripts)
+    if game:IsLoaded() then
+        PcallCheckResult(function()
+            _Scripts()
+        end, function()
+            warn("[Success]: game loaded.")
+        end)
+    else
+        warn("[Bugs]: error can't load game, scripts failed.")
+    end
+end
+
+function _MouseButton1Click(_name, _Scripts)
+    _name.MouseButton1Click:Connect(function()
+        PcallCheckResult(function()
+            _Scripts()
+        end, function()
+            warn("[Success]: button activated changed.")
+        end)
+    end)
+end
+
+function _NewUIC(_name, _radius)
+    local AddNewUICorner = Instance.new("UICorner", _name)
+    AddNewUICorner.CornerRadius = UDim.new(_radius, 0)
+    AddNewUICorner.Name = "CustomNameUICorner_#" .. math.random(1, 1000)
+end
+
+function PlayAnimations_Id(ID)
+    local _char, _hmoid
+    _char = game:GetService("Players").LocalPlayer.Character
+    _hmoid = _char:FindFirstChildOfClass("Humanoid")
+    if not _hmoid then return end
+    
+    for _, _track in pairs(_hmoid:GetPlayingAnimationTracks()) do
+        _track:Stop()
+    end
+    
+    local _newAnims, _playnewAnims
+    _newAnims = Instance.new("Animation")
+    _newAnims.AnimationId = ID
+    _playnewAnims = _hmoid:LoadAnimation(_newAnims)
+    _playnewAnims:Play()
+end
+
+function _Create_AnimationButton(_name, _index_tb, _btn_Text, _scroll, _cvmain, _bheight, _bpadding, _Scripts)
+    local Anims_new = Instance.new("TextButton", _name)
+    Anims_new.Name = "AnimSpecial_Number #" .. math.random(1, _index_tb)
+    Anims_new.BackgroundTransparency = (DataConfigs["CustomBtn_Configs"] or {})[1] or 0
+    Anims_new.BackgroundColor3 = (DataConfigs["CustomBtn_Configs"] or {})[2] or Color3.fromRGB(0, 0, 0)
+    Anims_new.Position = (DataConfigs["CustomBtn_Configs"] or {})[3] or UDim2.new(0.02, 0, 0.02, 0)
+    Anims_new.Size = (DataConfigs["CustomBtn_Configs"] or {})[4] or UDim2.new(0.96, 0, 0.15, 0)
+    Anims_new.TextColor3 = (DataConfigs["CustomBtn_Configs"] or {})[5] or Color3.fromRGB(255, 255, 255)
+    Anims_new.TextScaled = (DataConfigs["CustomBtn_Configs"] or {})[6] or true
+    Anims_new.TextSize = (DataConfigs["CustomBtn_Configs"] or {})[7] or 9
+    Anims_new.Font = (DataConfigs["CustomBtn_Configs"] or {})[8] or Enum.Font.Code
+    Anims_new.Text = (DataConfigs["CustomBtn_Configs"] or {})[9] or _btn_Text
+    Anims_new.Visible = true
+    _NewUIC(Anims_new, 0.2)
+    _MouseButton1Click(Anims_new, function()
+        _Scripts()
+    end)
+    _cvmain = _cvmain + _bheight + _bpadding
+    _scroll.CanvasSize = UDim2.new(0, 0, 0, _cvmain)
+end
+
+function _CPlus_BTN(_tb, _target, _radnum, _i1, _i2, _i3)
+    for i, v in pairs(_tb) do
+        _Create_AnimationButton(_target, _radnum, i, _target, _i1, _i2, _i3, function()
+            print("[Success]: result " .. i .. " / " .. v[1])
+            PlayAnimations_Id("rbxassetid://" .. v[1])
+        end)
+    end
+end
+
+-- function [B-2] --
+function _HideAll()
+    _ExScroll.Visible = false
+    _ExScroll_I.Visible = false
+end
+
+function _DefaultConfigs()
+    _fPos1 = 0.4
+    _fPos2 = 0
+    _fPos3 = 0.25
+    _fPos4 = 0
+    Its_ToggledUI = false
+    PremadeFrameVis = false
+    SelfFrameVis = false
+end
+
+function _ConfigsDataUpdated()
+    _Data._fPos1 = _fPos1
+    _Data._fPos2 = _fPos2
+    _Data._fPos3 = _fPos3
+    _Data._fPos4 = _fPos4
+    _Data.Its_ToggledUI = Its_ToggledUI
+    _Data.PremadeFrameVis = PremadeFrameVis
+    _Data.SelfFrameVis = SelfFrameVis
+end
+
+function _SaveOrOverwrite_ConfigsData()
+    _ConfigsDataUpdated()
+    _OverwriteData = _HttpService:JSONEncode(_Data)
+    writefile("HoangHien_Script/Scripts/EmoteUI_Data.json", _OverwriteData, true)
+end
+
+function _ReadAndRe_Overwrite_ConfigsData()
+    local _Success, _Data = pcall(readfile, "HoangHien_Script/Scripts/EmoteUI_Data.json")
+    if _Success then
+        _DecodeData = _HttpService:JSONDecode(_Data)
+        _fPos1 = _DecodeData._fPos1
+        _fPos2 = _DecodeData._fPos2
+        _fPos3 = _DecodeData._fPos3
+        _fPos4 = _DecodeData._fPos4
+        Its_ToggledUI = _DecodeData.Its_ToggledUI
+        PremadeFrameVis = _DecodeData.PremadeFrameVis
+        SelfFrameVis = _DecodeData.SelfFrameVis
+    else
+        _DefaultConfigs()
+    end
+    
+    _ExFrame.Position = UDim2.new(_fPos1, _fPos2, _fPos3, _fPos4)
+    if Its_ToggledUI == false then
+        _ToggleBtn.Text = "+"
+        _ExFrame.Visible = false
+    else
+        _ToggleBtn.Text = "-"
+        _ExFrame.Visible = true
+    end
+    
+    if PremadeFrameVis == false then
+        _ExScroll.Visible = false
+    else
+        _ExScroll.Visible = true
+    end
+    
+    if SelfFrameVis == false then
+        _ExScroll_I.Visible = false
+    else
+        _ExScroll_I.Visible = true
+    end
+end
+
+-- Run Scripts [C-1]
+GameLoaded(function()
+    _NewUIC(_ToggleBtn, 0.2)
+    _NewUIC(_ExFrame, 0.05)
+    _NewUIC(_ExScroll, 0.2)
+    _NewUIC(_ExScroll_I, 0.2)
+    _NewUIC(_MyCollection, 0.15)
+    _NewUIC(_YourCollection, 0.15)
+    
+    if not isfolder("HoangHien_Script") then
+        makefolder("HoangHien_Script")
+        warn("[Noticed]: not founded one, make new file.")
+    else
+        warn("[Noticed]: founded file.")
+    end
+    
+    if not isfolder("HoangHien_Script/Scripts") then
+        makefolder("HoangHien_Script/Scripts")
+        warn("[Noticed]: not founded one, make new store.")
+    else
+        warn("[Noticed]: file exist.")
+    end
+    
+    if not isfile("HoangHien_Script/Scripts/EmoteUI_Data.json") then
+        _RandomStuff_X1 = _HttpService:JSONEncode(_Data)
+        writefile("HoangHien_Script/Scripts/EmoteUI_Data.json", _RandomStuff_X1, true)
+        warn("[Noticed]: not founded json data, make new json data.")
+    else
+        warn("[Noticed]: json data file exist.")
+        warn("[Processing]: reading json data.")
+        PcallCheckResult(function()
+            _ReadAndRe_Overwrite_ConfigsData()
+        end, function()
+            warn("[Processing]: completed!")
+        end)
+    end
+    
+    if not isfile("HoangHien_Script/Scripts/EmoteUI_YourCollection.hh") then
+        _RandomStuff_X2 = "Hello friends =)."
+        writefile("HoangHien_Script/Scripts/EmoteUI_YourCollection.hh", _RandomStuff_X2, true)
+        warn("[Noticed]: not founded hh data, make new hh data.")
+    else
+        warn("[Noticed]: hh data exist.")
+    end
+    
+    _CPlus_BTN(_G.PremadeEmotes, _ExScroll, 9999, _IntCanvasmain_F1, _IntBHeight_F1, _IntBPadding_F1)
+    
+    _MouseButton1Click(_ToggleBtn, function()
+        if not Its_ToggledUI then
+            Its_ToggledUI = true
+            _ToggleBtn.Text = "-"
+            _ExFrame.Visible = true
+        else
+            Its_ToggledUI = false
+            _ToggleBtn.Text = "+"
+            _ExFrame.Visible = false
+            PcallCheckResult(function()
+                _IntfPos = _ExFrame.Position
+                _fPos1 = _IntfPos.X.Scale
+                _fPos2 = _IntfPos.X.Offset
+                _fPos3 = _IntfPos.Y.Scale
+                _fPos4 = _IntfPos.Y.Offset
+                _SaveOrOverwrite_ConfigsData()
+            end, function()
+                warn("[Processing]: storage frame position!")
+            end)
+        end
+        _SaveOrOverwrite_ConfigsData()
+    end)
+    
+    _MouseButton1Click(_MyCollection, function()
+        if not PremadeFrameVis then
+            PremadeFrameVis = true
+            SelfFrameVis = false
+        end
+        _HideAll()
+        _ExScroll.Visible = true
+        _SaveOrOverwrite_ConfigsData()
+    end)
+    
+    _MouseButton1Click(_YourCollection, function()
+        if not SelfFrameVis then
+            SelfFrameVis = true
+            PremadeFrameVis = false
+        end
+        _HideAll()
+        _ExScroll_I.Visible = true
+        _SaveOrOverwrite_ConfigsData()
+    end)
+end)
