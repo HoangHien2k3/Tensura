@@ -177,8 +177,8 @@ function _Create_AnimationButton_F1(_name, _index_tb, _btn_Text, _Scripts)
     Anims_new.Name = "AnimSpecial_Number #" .. math.random(1, _index_tb)
     Anims_new.BackgroundTransparency = (DataConfigs["CustomBtn_Configs"] or {})[1] or 0
     Anims_new.BackgroundColor3 = (DataConfigs["CustomBtn_Configs"] or {})[2] or Color3.fromRGB(0, 0, 0)
-    Anims_new.Position = (DataConfigs["CustomBtn_Configs"] or {})[3] or UDim2.new(0.02, 0, 0.02, _IntCanvasmain_F1 + _IntBPadding_F1)
-    Anims_new.Size = (DataConfigs["CustomBtn_Configs"] or {})[4] or UDim2.new(0.96, 0, 0.15, _IntBHeight_F1)
+    Anims_new.Position = (DataConfigs["CustomBtn_Configs"] or {})[3] or UDim2.new(0.02, 0, 0, _IntCanvasmain_F1 + _IntBPadding_F1)
+    Anims_new.Size = (DataConfigs["CustomBtn_Configs"] or {})[4] or UDim2.new(0.96, 0, 0, _IntBHeight_F1)
     Anims_new.TextColor3 = (DataConfigs["CustomBtn_Configs"] or {})[5] or Color3.fromRGB(255, 255, 255)
     Anims_new.TextScaled = (DataConfigs["CustomBtn_Configs"] or {})[6] or true
     Anims_new.TextSize = (DataConfigs["CustomBtn_Configs"] or {})[7] or 9
@@ -276,8 +276,6 @@ end
 GameLoaded(function()
     _NewUIC(_ToggleBtn, 0.2)
     _NewUIC(_ExFrame, 0.05)
-    _NewUIC(_ExScroll, 0.2)
-    _NewUIC(_ExScroll_I, 0.2)
     _NewUIC(_MyCollection, 0.15)
     _NewUIC(_YourCollection, 0.15)
     
