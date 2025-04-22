@@ -171,13 +171,14 @@ function PlayAnimations_Id(ID)
     _playnewAnims:Play()
 end
 
-function _Create_AnimationButton(_name, _index_tb, _btn_Text, _scroll, _cvmain, _bheight, _bpadding, _Scripts)
+-- Default Emotes --
+function _Create_AnimationButton_F1(_name, _index_tb, _btn_Text, _Scripts)
     local Anims_new = Instance.new("TextButton", _name)
     Anims_new.Name = "AnimSpecial_Number #" .. math.random(1, _index_tb)
     Anims_new.BackgroundTransparency = (DataConfigs["CustomBtn_Configs"] or {})[1] or 0
     Anims_new.BackgroundColor3 = (DataConfigs["CustomBtn_Configs"] or {})[2] or Color3.fromRGB(0, 0, 0)
-    Anims_new.Position = (DataConfigs["CustomBtn_Configs"] or {})[3] or UDim2.new(0.02, 0, 0.02, _cvmain + _bpadding)
-    Anims_new.Size = (DataConfigs["CustomBtn_Configs"] or {})[4] or UDim2.new(0.96, 0, 0.15, _bheight)
+    Anims_new.Position = (DataConfigs["CustomBtn_Configs"] or {})[3] or UDim2.new(0.02, 0, 0.02, _IntCanvasmain_F1 + _IntBPadding_F1)
+    Anims_new.Size = (DataConfigs["CustomBtn_Configs"] or {})[4] or UDim2.new(0.96, 0, 0.15, _IntBHeight_F1)
     Anims_new.TextColor3 = (DataConfigs["CustomBtn_Configs"] or {})[5] or Color3.fromRGB(255, 255, 255)
     Anims_new.TextScaled = (DataConfigs["CustomBtn_Configs"] or {})[6] or true
     Anims_new.TextSize = (DataConfigs["CustomBtn_Configs"] or {})[7] or 9
@@ -188,18 +189,19 @@ function _Create_AnimationButton(_name, _index_tb, _btn_Text, _scroll, _cvmain, 
     _MouseButton1Click(Anims_new, function()
         _Scripts()
     end)
-    _cvmain = _cvmain + _bheight + _bpadding
-    _scroll.CanvasSize = UDim2.new(0, 0, 0, _cvmain)
+    _IntCanvasmain_F1 = _IntCanvasmain_F1 + _IntBHeight_F1 + _IntBPadding_F1
+    _ExScroll.CanvasSize = UDim2.new(0, 0, 0, _IntCanvasmain_F1)
 end
 
-function _CPlus_BTN(_tb, _target, _radnum, _i1, _i2, _i3)
+function _CPlus_BTN_F1(_tb, _target, _radnum)
     for i, v in pairs(_tb) do
-        _Create_AnimationButton(_target, _radnum, i, _target, _i1, _i2, _i3, function()
+        _Create_AnimationButton_F1(_target, _radnum, i, function()
             print("[Success]: result " .. i .. " / " .. v[1])
             PlayAnimations_Id("rbxassetid://" .. v[1])
         end)
     end
 end
+-- Your Emotes Collection --
 
 -- function [B-2] --
 function _HideAll()
@@ -317,7 +319,7 @@ GameLoaded(function()
     
     loadstring(game:HttpGet("https://raw.githubusercontent.com/HoangHien2k3/Tensura/refs/heads/main/DataStorage/EmotesUI/EmotesData"))()
     task.wait()
-    _CPlus_BTN(_G.PremadeEmotes, _ExScroll, 9999, _IntCanvasmain_F1, _IntBHeight_F1, _IntBPadding_F1)
+    _CPlus_BTN(_G.PremadeEmotes, _ExScroll, 9999)
     
     _MouseButton1Click(_ToggleBtn, function()
         if not Its_ToggledUI then
