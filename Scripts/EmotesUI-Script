@@ -176,8 +176,8 @@ function _Create_AnimationButton(_name, _index_tb, _btn_Text, _scroll, _cvmain, 
     Anims_new.Name = "AnimSpecial_Number #" .. math.random(1, _index_tb)
     Anims_new.BackgroundTransparency = (DataConfigs["CustomBtn_Configs"] or {})[1] or 0
     Anims_new.BackgroundColor3 = (DataConfigs["CustomBtn_Configs"] or {})[2] or Color3.fromRGB(0, 0, 0)
-    Anims_new.Position = (DataConfigs["CustomBtn_Configs"] or {})[3] or UDim2.new(0.02, 0, 0.02, 0)
-    Anims_new.Size = (DataConfigs["CustomBtn_Configs"] or {})[4] or UDim2.new(0.96, 0, 0.15, 0)
+    Anims_new.Position = (DataConfigs["CustomBtn_Configs"] or {})[3] or UDim2.new(0.02, 0, 0.02, _cvmain + _bpadding)
+    Anims_new.Size = (DataConfigs["CustomBtn_Configs"] or {})[4] or UDim2.new(0.96, 0, 0.15, _bheight)
     Anims_new.TextColor3 = (DataConfigs["CustomBtn_Configs"] or {})[5] or Color3.fromRGB(255, 255, 255)
     Anims_new.TextScaled = (DataConfigs["CustomBtn_Configs"] or {})[6] or true
     Anims_new.TextSize = (DataConfigs["CustomBtn_Configs"] or {})[7] or 9
