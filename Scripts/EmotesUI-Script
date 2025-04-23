@@ -443,7 +443,9 @@ GameLoaded(function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/HoangHien2k3/Tensura/refs/heads/main/DataStorage/EmotesUI/EmotesData"))()
     task.wait()
     _CPlus_BTN_F1(_G.PremadeEmotes, _ExScroll, 9999)
-    _CPlus_BTN_F3("Animation")
+    task.spawn(function()
+        _CPlus_BTN_F3("Animation")
+    end)
     
     _MouseButton1Click(_ToggleBtn, function()
         if not Its_ToggledUI then
