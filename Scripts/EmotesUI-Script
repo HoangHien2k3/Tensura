@@ -1,11 +1,12 @@
 -- Emote GUI.v2: HoangHien Scripts --
-local _CoreGui, _HttpService  -- Service [A]
-local _ScreenGui, _ToggleBtn, _MyCollection, _YourCollection  -- Instance UI [B]
-local _Data, _OverwriteData, _DecodeData, _fPos1, _fPos2, _fPos3, _fPos4, Its_ToggledUI, PremadeFrameVis, SelfFrameVis, _IntfPos, _IntCanvasmain_F1, _IntBHeight_F1, _IntBPadding_F1, _IntCanvasmain_F2, _IntBHeight_F2, _IntBPadding_F2 -- Variable [C]
+local _CoreGui, _HttpService, _MarketplaceService  -- Service [A]
+local _ScreenGui, _ToggleBtn, _MyCollection, _YourCollection, _GameAnimations, _LockedFrame  -- Instance UI [B]
+local _Data, _OverwriteData, _DecodeData, _fPos1, _fPos2, _fPos3, _fPos4, Its_ToggledUI, ItLockedFrame, PremadeFrameVis, SelfFrameVis, GameFrameVis, _IntfPos, _IntCanvasmain_F1, _IntBHeight_F1, _IntBPadding_F1, _IntCanvasmain_F2, _IntBHeight_F2, _IntBPadding_F2, _IntCanvasmain_F3, _IntBHeight_F3, _IntBPadding_F3 -- Variable [C]
 local _RandomStuff_X1, _RandomStuff_X2 -- random Variable [D]
 
 _CoreGui = game:GetService("CoreGui")
 _HttpService = game:GetService("HttpService")
+_MarketplaceService = game:GetService("MarketplaceService")
 
 for index, ui in pairs(_CoreGui:GetChildren()) do
     if ui:IsA("ScreenGui") and ui.Name == "EmoteUI_Version2" then
@@ -19,8 +20,11 @@ _ToggleBtn = Instance.new("TextButton", _ScreenGui)
 _ExFrame = Instance.new("Frame", _ScreenGui)
 _ExScroll = Instance.new("ScrollingFrame", _ExFrame)
 _ExScroll_I = Instance.new("ScrollingFrame", _ExFrame)
+_ExScroll_II = Instance.new("ScrollingFrame", _ExFrame)
 _MyCollection = Instance.new("TextButton", _ExFrame)
 _YourCollection = Instance.new("TextButton", _ExFrame)
+_GameAnimations = Instance.new("TextButton", _ExFrame)
+_LockedFrame = Instance.new("TextButton", _ExFrame)
 
 -- Variable [A-0] --
 _fPos1 = 0.4
@@ -28,15 +32,20 @@ _fPos2 = 0
 _fPos3 = 0.25
 _fPos4 = 0
 Its_ToggledUI = false
+ItLockedFrame = false
 PremadeFrameVis = false
 SelfFrameVis = false
+GameFrameVis = false
 
 _IntCanvasmain_F1 = 0
 _IntCanvasmain_F2 = 0
+_IntCanvasmain_F3 = 0
 _IntBHeight_F1 = 10
 _IntBHeight_F2 = 10
+_IntBHeight_F3 = 10
 _IntBPadding_F1 = 2
 _IntBPadding_F2 = 2
+_IntBPadding_F3 = 2
 
 -- Data [A-1] --
 _G.PremadeEmotes = {}
@@ -47,8 +56,10 @@ _Data = {
     _fPos3 = _fPos3,
     _fPos4 = _fPos4,
     Its_ToggledUI = Its_ToggledUI,
+    ItLockedFrame = ItLockedFrame,
     PremadeFrameVis = PremadeFrameVis,
-    SelfFrameVis = SelfFrameVis
+    SelfFrameVis = SelfFrameVis,
+    GameFrameVis = GameFrameVis
 }
 
 local DataConfigs = _G.UIConfigs
@@ -92,6 +103,14 @@ _ExScroll_I.CanvasSize = (DataConfigs["ScrollingFrame"] or {})[5] or UDim2.new(0
 _ExScroll_I.ScrollBarThickness = (DataConfigs["ScrollingFrame"] or {})[6] or 0.1
 _ExScroll_I.Visible = false
 
+_ExScroll_II.BackgroundTransparency = (DataConfigs["ScrollingFrame"] or {})[1] or 0.5
+_ExScroll_II.BackgroundColor3 = (DataConfigs["ScrollingFrame"] or {})[2] or Color3.fromRGB(0, 0, 0)
+_ExScroll_II.Position = (DataConfigs["ScrollingFrame"] or {})[3] or UDim2.new(0.02, 0, 0.15, 0)
+_ExScroll_II.Size = (DataConfigs["ScrollingFrame"] or {})[4] or UDim2.new(0.650, 0, 0.82, 0)
+_ExScroll_II.CanvasSize = (DataConfigs["ScrollingFrame"] or {})[5] or UDim2.new(0, 0, 0, 0)
+_ExScroll_II.ScrollBarThickness = (DataConfigs["ScrollingFrame"] or {})[6] or 0.1
+_ExScroll_II.Visible = false
+
 _MyCollection.BackgroundTransparency = (DataConfigs["MyCollection"] or {})[1] or 0.5
 _MyCollection.BackgroundColor3 = (DataConfigs["MyCollection"] or {})[2] or Color3.fromRGB(0, 0, 0)
 _MyCollection.Position = (DataConfigs["MyCollection"] or {})[3] or UDim2.new(0.02, 0, 0.04, 0)
@@ -100,7 +119,7 @@ _MyCollection.TextColor3 = (DataConfigs["MyCollection"] or {})[5] or Color3.from
 _MyCollection.TextScaled = (DataConfigs["MyCollection"] or {})[6] or true
 _MyCollection.TextSize = (DataConfigs["MyCollection"] or {})[7] or 9
 _MyCollection.Font = (DataConfigs["MyCollection"] or {})[8] or Enum.Font.Code
-_MyCollection.Text = (DataConfigs["MyCollection"] or {})[9] or "Default"
+_MyCollection.Text = (DataConfigs["MyCollection"] or {})[9] or "Owner"
 _MyCollection.Visible = true
 
 _YourCollection.BackgroundTransparency = (DataConfigs["YourCollection"] or {})[1] or 0.5
@@ -111,8 +130,30 @@ _YourCollection.TextColor3 = (DataConfigs["YourCollection"] or {})[5] or Color3.
 _YourCollection.TextScaled = (DataConfigs["YourCollection"] or {})[6] or true
 _YourCollection.TextSize = (DataConfigs["YourCollection"] or {})[7] or 9
 _YourCollection.Font = (DataConfigs["YourCollection"] or {})[8] or Enum.Font.Code
-_YourCollection.Text = (DataConfigs["YourCollection"] or {})[9] or "Storage"
+_YourCollection.Text = (DataConfigs["YourCollection"] or {})[9] or "Owned"
 _YourCollection.Visible = true
+
+_GameAnimations.BackgroundTransparency = (DataConfigs["GameAnimations"] or {})[1] or 0.5
+_GameAnimations.BackgroundColor3 = (DataConfigs["GameAnimations"] or {})[2] or Color3.fromRGB(0, 0, 0)
+_GameAnimations.Position = (DataConfigs["GameAnimations"] or {})[3] or UDim2.new(0.54, 0, 0.04, 0)
+_GameAnimations.Size = (DataConfigs["GameAnimations"] or {})[4] or UDim2.new(0.19, 0, 0.10, 0)
+_GameAnimations.TextColor3 = (DataConfigs["GameAnimations"] or {})[5] or Color3.fromRGB(255, 255, 255)
+_GameAnimations.TextScaled = (DataConfigs["GameAnimations"] or {})[6] or true
+_GameAnimations.TextSize = (DataConfigs["GameAnimations"] or {})[7] or 9
+_GameAnimations.Font = (DataConfigs["GameAnimations"] or {})[8] or Enum.Font.Code
+_GameAnimations.Text = (DataConfigs["GameAnimations"] or {})[9] or "InGame"
+_GameAnimations.Visible = true
+
+_LockedFrame.BackgroundTransparency = (DataConfigs["LockedFrame"] or {})[1] or 0.5
+_LockedFrame.BackgroundColor3 = (DataConfigs["LockedFrame"] or {})[2] or Color3.fromRGB(0, 0, 0)
+_LockedFrame.Position = (DataConfigs["LockedFrame"] or {})[3] or UDim2.new(0.74, 0, 0.04, 0)
+_LockedFrame.Size = (DataConfigs["LockedFrame"] or {})[4] or UDim2.new(0.18, 0, 0.10, 0)
+_LockedFrame.TextColor3 = (DataConfigs["LockedFrame"] or {})[5] or Color3.fromRGB(0, 255, 0)
+_LockedFrame.TextScaled = (DataConfigs["LockedFrame"] or {})[6] or true
+_LockedFrame.TextSize = (DataConfigs["LockedFrame"] or {})[7] or 9
+_LockedFrame.Font = (DataConfigs["LockedFrame"] or {})[8] or Enum.Font.Code
+_LockedFrame.Text = (DataConfigs["LockedFrame"] or {})[9] or "UnLocked"
+_LockedFrame.Visible = true
 
 -- function [B-1] --
 function PcallCheckResult(_Scripts, _Scripts_I)
@@ -171,7 +212,7 @@ function PlayAnimations_Id(ID)
     _playnewAnims:Play()
 end
 
--- Default Emotes --
+-- Owner Emotes --
 function _Create_AnimationButton_F1(_name, _index_tb, _btn_Text, _Scripts)
     local Anims_new = Instance.new("TextButton", _name)
     Anims_new.Name = "AnimSpecial_Number #" .. math.random(1, _index_tb)
@@ -193,20 +234,73 @@ function _Create_AnimationButton_F1(_name, _index_tb, _btn_Text, _Scripts)
     _ExScroll.CanvasSize = UDim2.new(0, 0, 0, _IntCanvasmain_F1)
 end
 
+-- Game Animations --
+function _Create_AnimationButton_F3(_name, _index_tb, _btn_Text, _Scripts)
+    local Anims_new = Instance.new("TextButton", _name)
+    Anims_new.Name = "AnimSpecial_Number #" .. math.random(1, _index_tb)
+    Anims_new.BackgroundTransparency = (DataConfigs["CustomBtn_Configs"] or {})[1] or 0
+    Anims_new.BackgroundColor3 = (DataConfigs["CustomBtn_Configs"] or {})[2] or Color3.fromRGB(0, 0, 0)
+    Anims_new.Position = (DataConfigs["CustomBtn_Configs"] or {})[3] or UDim2.new(0.02, 0, 0, _IntCanvasmain_F3 + _IntBPadding_F3)
+    Anims_new.Size = (DataConfigs["CustomBtn_Configs"] or {})[4] or UDim2.new(0.96, 0, 0, _IntBHeight_F3)
+    Anims_new.TextColor3 = (DataConfigs["CustomBtn_Configs"] or {})[5] or Color3.fromRGB(255, 255, 255)
+    Anims_new.TextScaled = (DataConfigs["CustomBtn_Configs"] or {})[6] or true
+    Anims_new.TextSize = (DataConfigs["CustomBtn_Configs"] or {})[7] or 9
+    Anims_new.Font = (DataConfigs["CustomBtn_Configs"] or {})[8] or Enum.Font.Code
+    Anims_new.Text = (DataConfigs["CustomBtn_Configs"] or {})[9] or _btn_Text
+    Anims_new.Visible = true
+    _NewUIC(Anims_new, 0.2)
+    _MouseButton1Click(Anims_new, function()
+        _Scripts()
+    end)
+    _IntCanvasmain_F3 = _IntCanvasmain_F3 + _IntBHeight_F3 + _IntBPadding_F3
+    _ExScroll_II.CanvasSize = UDim2.new(0, 0, 0, _IntCanvasmain_F3)
+end
+
+-- Read Owned {} --
 function _CPlus_BTN_F1(_tb, _target, _radnum)
     for i, v in pairs(_tb) do
-        _Create_AnimationButton_F1(_target, _radnum, i, function()
-            print("[Success]: result " .. i .. " / " .. v[1])
+        _Create_AnimationButton_F1(_target, _radnum, "[" .. i .. "]", function()
+            print("[Success]: result [" .. i .. "] / [" .. v[1] .. "]")
             PlayAnimations_Id("rbxassetid://" .. v[1])
         end)
     end
 end
--- Your Emotes Collection --
+
+-- Searching Game Animations --
+function _CPlus_BTN_F3(_IsAWhat)
+    for _, items in pairs(game:GetDescendants()) do
+        if items:IsA(_IsAWhat) then
+            local A1_AnimationId = items.AnimationId
+            local A1Find = A1_AnimationId:find("rbxassetid://") and A1_AnimationId:match("%d+")
+            
+            if not string.find(A1_AnimationId, "507768375") and not string.find(A1_AnimationId, "180435571") then
+                if A1Find then
+                    local success, result = pcall(function()
+                        return _MarketplaceService:GetProductInfo(tonumber(A1Find)).Name
+                    end)
+                    local _specific_pName = success and result or "failed..."
+                end
+            end
+            
+            _Create_AnimationButton_F3(_ExScroll_II, 9999, "[" .. items.Name .. "]", function()
+                print("[Success]: result\n AnimationId: [" .. A1_AnimationId .. "]\n >> Animation Name: [" .. items.Name .. "] <<\n >>> ProductName: [" .. _specific_pName .. "] <<<")
+                PlayAnimations_Id(A1_AnimationId)
+            end)
+        end
+    end
+end
 
 -- function [B-2] --
 function _HideAll()
     _ExScroll.Visible = false
     _ExScroll_I.Visible = false
+    _ExScroll_II.Visible = false
+end
+
+function _SetFalse()
+    PremadeFrameVis = false
+    SelfFrameVis = false
+    GameFrameVis = false
 end
 
 function _DefaultConfigs()
@@ -215,8 +309,10 @@ function _DefaultConfigs()
     _fPos3 = 0.25
     _fPos4 = 0
     Its_ToggledUI = false
+    ItLockedFrame = false
     PremadeFrameVis = false
     SelfFrameVis = false
+    GameFrameVis = false
 end
 
 function _ConfigsDataUpdated()
@@ -225,8 +321,10 @@ function _ConfigsDataUpdated()
     _Data._fPos3 = _fPos3
     _Data._fPos4 = _fPos4
     _Data.Its_ToggledUI = Its_ToggledUI
+    _Data.ItLockedFrame = ItLockedFrame
     _Data.PremadeFrameVis = PremadeFrameVis
     _Data.SelfFrameVis = SelfFrameVis
+    _Data.GameFrameVis = GameFrameVis
 end
 
 function _SaveOrOverwrite_ConfigsData()
@@ -244,8 +342,10 @@ function _ReadAndRe_Overwrite_ConfigsData()
         _fPos3 = _DecodeData._fPos3
         _fPos4 = _DecodeData._fPos4
         Its_ToggledUI = _DecodeData.Its_ToggledUI
+        ItLockedFrame = _DecodeData.ItLockedFrame
         PremadeFrameVis = _DecodeData.PremadeFrameVis
         SelfFrameVis = _DecodeData.SelfFrameVis
+        GameFrameVis = _DecodeData.GameFrameVis
     else
         _DefaultConfigs()
     end
@@ -259,6 +359,14 @@ function _ReadAndRe_Overwrite_ConfigsData()
         _ExFrame.Visible = true
     end
     
+    if ItLockedFrame == false then
+        _LockedFrame.Text = (DataConfigs["LockedFrame"] or {})[9] or "UnLocked"
+        _ExFrame.Draggable = true
+    else
+        _LockedFrame.Text = (DataConfigs["LockedFrame"] or {})[10] or "Locked"
+        _ExFrame.Draggable = false
+    end
+    
     if PremadeFrameVis == false then
         _ExScroll.Visible = false
     else
@@ -270,6 +378,12 @@ function _ReadAndRe_Overwrite_ConfigsData()
     else
         _ExScroll_I.Visible = true
     end
+    
+    if GameFrameVis == false then
+        _ExScroll_II.Visible = false
+    else
+        _ExScroll_II.Visible = true
+    end
 end
 
 -- Run Scripts [C-1]
@@ -278,6 +392,8 @@ GameLoaded(function()
     _NewUIC(_ExFrame, 0.05)
     _NewUIC(_MyCollection, 0.15)
     _NewUIC(_YourCollection, 0.15)
+    _NewUIC(_GameAnimations, 0.15)
+    _NewUIC(_LockedFrame, 0.15)
     
     if not isfolder("HoangHien_Script") then
         makefolder("HoangHien_Script")
@@ -318,6 +434,7 @@ GameLoaded(function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/HoangHien2k3/Tensura/refs/heads/main/DataStorage/EmotesUI/EmotesData"))()
     task.wait()
     _CPlus_BTN_F1(_G.PremadeEmotes, _ExScroll, 9999)
+    _CPlus_BTN_F3("Animation")
     
     _MouseButton1Click(_ToggleBtn, function()
         if not Its_ToggledUI then
@@ -345,7 +462,7 @@ GameLoaded(function()
     _MouseButton1Click(_MyCollection, function()
         if not PremadeFrameVis then
             PremadeFrameVis = true
-            SelfFrameVis = false
+            _SetFalse()
         end
         _HideAll()
         _ExScroll.Visible = true
@@ -355,10 +472,33 @@ GameLoaded(function()
     _MouseButton1Click(_YourCollection, function()
         if not SelfFrameVis then
             SelfFrameVis = true
-            PremadeFrameVis = false
+            _SetFalse()
         end
         _HideAll()
         _ExScroll_I.Visible = true
+        _SaveOrOverwrite_ConfigsData()
+    end)
+    
+    _MouseButton1Click(_GameAnimations, function()
+        if not GameFrameVis then
+            GameFrameVis = true
+            _SetFalse()
+        end
+        _HideAll
+        _ExScroll_II.Visible = true
+        _SaveOrOverwrite_ConfigsData()
+    end)
+    
+    _MouseButton1Click(_LockedFrame, function()
+        if not ItLockedFrame then
+            ItLockedFrame = true
+            _LockedFrame.Text = (DataConfigs["LockedFrame"] or {})[10] or "Locked"
+            _ExFrame.Draggable = false
+        else
+            ItLockedFrame = false
+            _LockedFrame.Text = (DataConfigs["LockedFrame"] or {})[9] or "UnLocked"
+            _ExFrame.Draggable = true
+        end
         _SaveOrOverwrite_ConfigsData()
     end)
 end)
