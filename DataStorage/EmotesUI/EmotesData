@@ -1,9 +1,27 @@
-_G.PremadeEmotes = {
-    ["Sonic Idle"] = {15957361339},
-    ["Carameldansen"] = {17861841334},
-    ["Celebration"] = {17863041811},
-    ["Breakdance"] = {15090032390},
-    ["Nika"] = {17097409396},
-    ["Gojo on Heaven"] = {15503060948},
-    ["Fake Counter Death Blow"] = {15128849047}
-}
+if game.GameId == 3808081382 then
+    _G.PremadeEmotes = {
+        ["Sonic Idle"] = {15957361339},
+        ["Carameldansen"] = {17861841334},
+        ["Celebration"] = {17863041811},
+        ["Breakdance"] = {15090032390},
+        ["Nika"] = {17097409396},
+        ["Gojo on Heaven"] = {15503060948},
+        ["Fake Counter Death Blow"] = {15128849047}
+    }
+else
+    _G.PremadeEmotes = {
+        ["This Game..."] = {0},
+        ["I'm does not..."] = {1},
+        ["Having a Emotes..."] = {2},
+        ["Or Animations..."] = {3},
+        ["Saved, Try another..."] = {4},
+        ["Games... Like TSB..."] = {5},
+        ["It might have some..."] = {6},
+        ["Emotes/Animations..."] = {7},
+        ["That's All, Cya Later!"] = {8},
+        ["======================"] = {9},
+        ["Credit by HoangHien Scripts"] = {10}
+    }
+end
+
+-- Artyplaythings --
