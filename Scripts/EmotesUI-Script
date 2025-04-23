@@ -283,7 +283,7 @@ function _CPlus_BTN_F3(_IsAWhat)
             end
             
             _Create_AnimationButton_F3(_ExScroll_II, 9999, "[" .. items.Name .. "]", function()
-                print("[Success]: result\n AnimationId: [" .. A1_AnimationId .. "]\n >> Animation Name: [" .. items.Name .. "] <<\n >>> ProductName: [" .. _specific_pName .. "] <<<")
+                -- print("[Success]: result\n AnimationId: [" .. A1_AnimationId .. "]\n >> Animation Name: [" .. items.Name .. "] <<\n >>> ProductName: [" .. _specific_pName .. "] <<<")
                 PlayAnimations_Id(A1_AnimationId)
             end)
         end
@@ -461,8 +461,8 @@ GameLoaded(function()
     
     _MouseButton1Click(_MyCollection, function()
         if not PremadeFrameVis then
-            PremadeFrameVis = true
             _SetFalse()
+            PremadeFrameVis = true
         end
         _HideAll()
         _ExScroll.Visible = true
@@ -471,8 +471,8 @@ GameLoaded(function()
     
     _MouseButton1Click(_YourCollection, function()
         if not SelfFrameVis then
-            SelfFrameVis = true
             _SetFalse()
+            SelfFrameVis = true
         end
         _HideAll()
         _ExScroll_I.Visible = true
@@ -481,10 +481,10 @@ GameLoaded(function()
     
     _MouseButton1Click(_GameAnimations, function()
         if not GameFrameVis then
-            GameFrameVis = true
             _SetFalse()
+            GameFrameVis = true
         end
-        _HideAll
+        _HideAll()
         _ExScroll_II.Visible = true
         _SaveOrOverwrite_ConfigsData()
     end)
