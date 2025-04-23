@@ -21,6 +21,7 @@ _ExFrame = Instance.new("Frame", _ScreenGui)
 _ExScroll = Instance.new("ScrollingFrame", _ExFrame)
 _ExScroll_I = Instance.new("ScrollingFrame", _ExFrame)
 _ExScroll_II = Instance.new("ScrollingFrame", _ExFrame)
+_AbilityScroll = Instance.new("ScrollingFrame", _ExFrame)
 _MyCollection = Instance.new("TextButton", _ExFrame)
 _YourCollection = Instance.new("TextButton", _ExFrame)
 _GameAnimations = Instance.new("TextButton", _ExFrame)
@@ -110,6 +111,14 @@ _ExScroll_II.Size = (DataConfigs["ScrollingFrame"] or {})[4] or UDim2.new(0.650,
 _ExScroll_II.CanvasSize = (DataConfigs["ScrollingFrame"] or {})[5] or UDim2.new(0, 0, 0, 0)
 _ExScroll_II.ScrollBarThickness = (DataConfigs["ScrollingFrame"] or {})[6] or 0.1
 _ExScroll_II.Visible = false
+
+_AbilityScroll.BackgroundTransparency = (DataConfigs["AbilityScrollingFrame"] or {})[1] or 0.5
+_AbilityScroll.BackgroundColor3 = (DataConfigs["AbilityScrollingFrame"] or {})[2] or Color3.fromRGB(0, 0, 0)
+_AbilityScroll.Position = (DataConfigs["AbilityScrollingFrame"] or {})[3] or UDim2.new(0.680, 0, 0.15, 0)
+_AbilityScroll.Size = (DataConfigs["AbilityScrollingFrame"] or {})[4] or UDim2.new(0.24, 0, 0.82, 0)
+_AbilityScroll.CanvasSize = (DataConfigs["AbilityScrollingFrame"] or {})[5] or UDim2.new(0, 0, 0, 0)
+_AbilityScroll.ScrollBarThickness = (DataConfigs["AbilityScrollingFrame"] or {})[6] or 0.1
+_AbilityScroll.Visible = true
 
 _MyCollection.BackgroundTransparency = (DataConfigs["MyCollection"] or {})[1] or 0.5
 _MyCollection.BackgroundColor3 = (DataConfigs["MyCollection"] or {})[2] or Color3.fromRGB(0, 0, 0)
