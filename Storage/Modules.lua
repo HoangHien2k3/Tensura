@@ -15,8 +15,8 @@ local BodyPart = {
 local Modules = {}
 
 Modules.PR = function(msg)
-    print(FunText[1] .. msg)
-    warn(FunText[1] .. msg)
+    print(FunText[1] .. " " .. msg)
+    warn(FunText[1] .. " " .. msg)
 end
 
 Modules.CorrectName = function(plr_name)
@@ -59,7 +59,7 @@ end
 
 Modules.TP = function(local_plr, plr_name)
     if plr_name and plr_name.Character and plr_name.Character:FindFirstChild(BodyPart[1]) then
-        local_plr.Character:SetPrimaryPartCFrame(plr_name.Character.HumanoidRootPart)
+        Players[local_plr].Character:SetPrimaryPartCFrame(plr_name.Character.HumanoidRootPart)
     else
         print(FunText[1] .. " " .. plr_name .. " does not exist a " .. BodyPart[1])
     end
