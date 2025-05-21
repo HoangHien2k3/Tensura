@@ -15,8 +15,8 @@ local BodyPart = {
 local Modules = {}
 
 Modules.PR = function(msg)
-    print(msg)
-    warn(msg)
+    print(FunText[1] .. msg)
+    warn(FunText[1] .. msg)
 end
 
 Modules.CorrectName = function(plr_name)
@@ -26,6 +26,7 @@ Modules.CorrectName = function(plr_name)
             return v
         end
     end
+    print(FunText[1] .. " " .. v.Name .. "| " .. v.DisplayName)
     return nil
 end
 
