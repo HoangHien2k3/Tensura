@@ -58,7 +58,7 @@ Modules.DevConsole = function()
 end
 
 Modules.TP = function(local_plr, plr_name)
-    if plr_name and plr_name.Character and plr_name.Character:FindFirstChild(BodyPart[1]) then
+    if plr_name and plr_name.Character and plr_name.Character:FindFirstChild("HumanoidRootPart") then
         Players[local_plr].Character:SetPrimaryPartCFrame(plr_name.Character.HumanoidRootPart)
     else
         print(FunText[1] .. " " .. plr_name .. " does not exist a " .. BodyPart[1])
